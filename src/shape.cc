@@ -1,4 +1,4 @@
-#include shape.h
+#include "shape.h"
 
 Shape::Shape(const Transformation *ObjectToWorld, const Transformation *WorldToObject)
     : ObjectToWorld(ObjectToWorld), WorldToObject(WorldToObject) {};

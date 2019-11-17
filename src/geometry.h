@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <math.h>
 
 template <typename T> class Vector2 {
 public:
