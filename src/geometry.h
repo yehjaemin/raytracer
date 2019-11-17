@@ -160,5 +160,15 @@ cross(const Vector3<T> &u, const Vector3<T> &v) {
                       u.x * v.y - u.y * v.x);
 }
 
+template <typename T> inline Vector2<T>
+normalize(const Vector2<T> &v) {
+    return v / v.length();
+}
+
+template <typename T> inline Vector3<T>
+normalize(const Vector3<T> &v) {
+    return v / v.length();
+}
+
 typedef Vector2<float> Vector2f;
 typedef Vector3<float> Vector3f;
