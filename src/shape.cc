@@ -5,6 +5,6 @@ Shape::Shape(const Transformation *ObjectToWorld, const Transformation *WorldToO
 
 Shape::~Shape() {}
 
-Shape::WorldBound() {
+Shape::getWorldBound() {
     return (*ObjectToWorld)(ObjectBound());
 }
