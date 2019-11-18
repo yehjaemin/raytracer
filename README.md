@@ -1,7 +1,7 @@
 # raytracer
 
 - [x] vectors
-- [ ] points
+- [x] points
 - [ ] rays
 - [ ] bounds
 - [ ] transformations
