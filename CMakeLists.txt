@@ -5,12 +5,12 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(core_source
     src/geometry.cc
-    src/shape.cc
+#    src/shape.cc
 )
 
 set(core_headers
     src/geometry.h
-    src/shape.h
+#    src/shape.h
 )
 
 add_library(lib
