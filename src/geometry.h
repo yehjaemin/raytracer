@@ -180,8 +180,28 @@ public:
     Point2() : x(0), y(0) {}
     Point2(T i, T j) : x(i), y(j) {}
 
-    Point2<T> &operator+(const Vector2<T> &v) const {
+    Point2<T> operator+(const Vector2<T> &v) const {
         return Point2(x + v.x, y + v.y);
+    }
+
+    const Point2<T> operator+=(const Vector2<T> &v) {
+        x += v.x;
+        y += v.y;
+        return *this;
+    }
+
+    Vector2<T> operator-(const Point2<T> &p) const {
+        return Vector2<T>(x - p.x, y - p.y);
+    }
+
+    Point2<T> operator-(const Vector2<T> &v) const {
+        return Point2<T>(x - v.x, y - v.y);
+    }
+
+    const Point2<T> &operator-=(const Vector2<T> &v) {
+        x -= v.x;
+        y -= v.y;
+        return *this;
     }
 
     T x, y;
@@ -192,9 +212,38 @@ public:
     Point3() : x(0), y(0), z(0) {}
     Point3(T i, T j, T k) : x(i), y(j), z(k) {}
 
-    Point3<T> &operator+(const Vector3<T> &v) const {
+    Point3<T> operator+(const Vector3<T> &v) const {
         return Point3(x + v.x, y + v.y, z + v.z);
+    }
+
+    const Point3<T> &operator+=(const Vector3<T> &v) {
+        x += v.x;
+        y += v.y;
+        z += v.z;
+    }
+
+    Vector3<T> operator-(const Point3<T> &p) const {
+        return Vector3<T>(x - p.x, y - p.y, z - p.z);
+    }
+
+    Point3<T> operator-(const Vector3<T> &v) const {
+        return Point3<T>(x - v.x, y - v.y, z - v.z);
+    }
+
+    const Point3<T> operator-=(const Vector3<T> &v) {
+        x -= v.x;
+        y -= v.y;
+        z -= v.z;
+        return *this;
     }
 
     T x, y, z;
 };
+
+template <typename T> inline float distance(const Point2<T> &p, const Point2<T> &q) {
+    return (p - q).length();
+}
+
+template <typename T> inline float distance(const Point3<T> &p, const Point3<T> &q) {
+    return (p - q).length();
+}
