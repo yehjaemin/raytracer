@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <assert.h>
+#include <limits>
 #include <math.h>
 
 template <typename T> class Vector2 {
@@ -247,3 +248,17 @@ template <typename T> inline float distance(const Point2<T> &p, const Point2<T> 
 template <typename T> inline float distance(const Point3<T> &p, const Point3<T> &q) {
     return (p - q).length();
 }
+
+typedef Point2<float> Point2f;
+typedef Point3<float> Point3f;
+
+class Ray {
+public:
+    Ray() : tMax(std::numeric_limits<float>::infinity()), time(0.f) {}
+    Ray(const Point3f &o, const Vector3f &d, float tMax = std::numeric_limits<float>::infinity(), float time = 0.f) : o(o), d(d), tMax(tMax), time(time) {}
+
+    Point3f o; // origin
+    Vector3f d; // direction
+    float tMax; // r(t) = o + dt
+    float time;
+};
