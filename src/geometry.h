@@ -256,6 +256,9 @@ class Ray {
 public:
     Ray() : tMax(std::numeric_limits<float>::infinity()), time(0.f) {}
     Ray(const Point3f &o, const Vector3f &d, float tMax = std::numeric_limits<float>::infinity(), float time = 0.f) : o(o), d(d), tMax(tMax), time(time) {}
+    Point3f operator ()(float t) const {
+        return o + d * t;
+    }
 
     Point3f o; // origin
     Vector3f d; // direction
