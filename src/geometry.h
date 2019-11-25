@@ -421,3 +421,6 @@ template <typename T> Bounds3<T> expand(const Bounds3<T> &b, T pad) {
     Point3<T> pMax = Point3<T>(b.pMax.x + pad, b.pMax.y + pad, b.pMax.z + pad);
     return Bounds3<T>(pMin, pMax);
 }
+
+typedef Bounds2<float> Bounds2f;
+typedef Bounds3<float> Bounds3f;
