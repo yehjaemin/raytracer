@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <limits>
 #include <math.h>
+#include "untitled.h"
 
 template <typename T> class Vector2 {
 public:
@@ -164,12 +165,12 @@ cross(const Vector3<T> &u, const Vector3<T> &v) {
 }
 
 template <typename T> inline Vector2<T>
-&normalize(const Vector2<T> &v) {
+normalize(const Vector2<T> &v) {
     return v / v.length();
 }
 
 template <typename T> inline Vector3<T>
-&normalize(const Vector3<T> &v) {
+normalize(const Vector3<T> &v) {
     return v / v.length();
 }
 
@@ -241,11 +242,11 @@ public:
     T x, y, z;
 };
 
-template <typename T> inline float distance(const Point2<T> &p, const Point2<T> &q) {
+template <typename T> inline float getDistance(const Point2<T> &p, const Point2<T> &q) {
     return (p - q).length();
 }
 
-template <typename T> inline float distance(const Point3<T> &p, const Point3<T> &q) {
+template <typename T> inline float getDistance(const Point3<T> &p, const Point3<T> &q) {
     return (p - q).length();
 }
 
@@ -265,3 +266,158 @@ public:
     float tMax; // r(t) = o + dt
     float time;
 };
+
+template <typename T> class Bounds2 {
+public:
+    Bounds2() {
+        T nMin = std::numeric_limits<T>::lowest();
+        T nMax = std::numeric_limits<T>::max();
+        pMin = Point2<T>(nMax, nMax);
+        pMax = Point2<T>(nMin, nMin);
+    }
+    Bounds2(const Point2<T> &p) : pMin(p), pMax(p) {}
+    Bounds2(const Point2<T> &p, const Point2<T> &q) {
+        pMin = Point2<T>(std::min(p.x, q.x), std::min(p.y, q.y));
+        pMax = Point2<T>(std::max(p.x, q.x), std::max(p.y, q.y));
+    }
+
+    Vector2<T> diagonal() const {
+        return pMax - pMin;
+    }
+
+    T area() const {
+        return (pMax.x - pMin.x) * (pMax.y - pMin.y);
+    }
+
+    int maxAxis() const {
+        Vector2<T> diag = pMax - pMin;
+        if (diag.x > diag.y)
+            return 0;
+        return 1;
+    }
+
+    bool operator==(const Bounds2<T> &b) const {
+        return pMin == b.pMin && pMax == b.pMax;
+    }
+
+    bool operator!=(const Bounds2<T> &b) const {
+        return pMin != b.pMin || pMax != b.pMax;
+    }
+
+    Point2<T> lerp(const Point2f &t) const {
+        return Point2<T>(untitled::lerp(t.x, pMin.x, pMax.x), untitled::lerp(t.y, pMin.y, pMax.y));
+    }
+
+    Point2<T> offset(const Point2<T> &p) const {
+        Point2<T> q = p - pMin;
+        T x = pMax.x - pMin.x;
+        T y = pMax.y - pMin.y;
+        if (x > 0)
+            q /= x;
+        if (y > 0)
+            q /= y;
+        return q;
+    }
+
+    Point2<T> pMin, pMax;
+};
+
+template <typename T> class Bounds3 {
+public:
+    Bounds3() {
+        T nMin = std::numeric_limits<T>::lowest();
+        T nMax = std::numeric_limits<T>::max();
+        pMin = Point3<T>(nMax, nMax, nMax);
+        pMax = Point3<T>(nMin, nMin, nMin);
+    }
+    Bounds3(const Point3<T> &p) : pMin(p), pMax(p) {}
+    Bounds3(const Point3<T> &p, const Point3<T> &q) {
+        pMin = Point3<T>(std::min(p.x, q.x), std::min(p.y, q.y), std::min(p.z, q.z));
+        pMax = Point3<T>(std::max(p.x, q.x), std::max(p.y, q.y), std::max(p.z, q.z));
+    }
+
+    Vector3<T> diagonal() const {
+        return pMax - pMin;
+    }
+
+    T surfaceArea() const {
+        T x = pMax.x - pMin.x;
+        T y = pMax.y - pMin.y;
+        T z = pMax.z - pMin.z;
+        return 2 * x * y + 2 * y * z + 2 * x * z;
+    }
+
+    T volume() const {
+        T x = pMax.x - pMin.x;
+        T y = pMax.y - pMin.y;
+        T z = pMax.z - pMin.z;
+        return x * y * z;
+    }
+
+    int maxAxis() const {
+        Vector3<T> diag = pMax - pMin;
+        T aMax = std::max(diag.x, diag.y, diag.z);
+        if (diag.x == aMax)
+            return 0;
+        if (diag.y == aMax)
+            return 1;
+        return 2;
+    }
+
+    bool operator==(const Bounds3<T> &b) const {
+        return pMin == b.pMin && pMax == b.pMax;
+    }
+
+    bool operator!=(const Bounds3<T> &b) const {
+        return pMin != b.pMin && pMax == b.pMax;
+    }
+
+    Point3<T> lerp(const Point3f &t) const {
+        return Point3<T>(untitled::lerp(t.x, pMin.x, pMax.x), untitled::lerp(t.y, pMin.y, pMax.y), untitled::lerp(t.z, pMin.z, pMax.z));
+    }
+
+    Point3<T> offset(const Point3<T> &p) const {
+        Point3<T> q = p - pMin;
+        T x = pMax.x - pMin.x;
+        T y = pMax.y - pMin.y;
+        T z = pMax.z - pMin.z;
+        if (x > 0)
+            q /= x;
+        if (y > 0)
+            q /= y;
+        if (z > 0)
+            q /= z;
+        return q;
+    }
+
+    Point3<T> pMin, pMax;
+};
+
+
+template <typename T> Bounds3<T> getUnion(const Bounds3<T> &b, const Point3<T> &p) {
+    Point3<T> pMin = Point3<T>(std::min(b.pMin.x, p.x), std::min(b.pMin.y, p.y), std::min(b.pMin.z, p.z));
+    Point3<T> pMax = Point3<T>(std::max(b.pMax.x, p.x), std::max(b.pMax.y, p.y), std::max(b.pMax.z, p.z));
+    return Bounds3<T>(pMin, pMax);
+}
+
+template <typename T> Bounds3<T> getUnion(const Bounds3<T> &b1, const Bounds3<T> &b2) {
+    Point3<T> pMin = Point3<T>(std::min(b1.pMin.x, b2.pMin.x), std::min(b1.pMin.y, b2.pMin.y), std::min(b1.pMin.z, b2.pMin.z));
+    Point3<T> pMax = Point3<T>(std::max(b1.pMax.x, b2.pMax.x), std::max(b1.pMax.y, b2.pMax.y), std::max(b1.pMax.z, b2.pMax.z));
+    return Bounds3<T>(pMin, pMax);
+}
+
+template <typename T> Bounds3<T> getIsect(const Bounds3<T> &b1, const Bounds3<T> &b2) {
+    Point3<T> pMin = Point3<T>(std::max(b1.pMin.x, b2.pMin.x), std::max(b1.pMin.y, b2.pMin.y), std::max(b1.pMin.z, b2.pMin.z));
+    Point3<T> pMax = Point3<T>(std::min(b1.pMax.x, b2.pMax.x), std::min(b1.pMax.y, b2.pMax.y), std::min(b1.pMax.z, b2.pMax.z));
+    return Bounds3<T>(pMin, pMax);
+}
+
+template <typename T> bool isInside(const Point3<T> &p, const Bounds3<T> &b) {
+    return b.pMin.x <= p.x && p.x <= b.pMax.x && b.pMin.y <= p.y && p.y <= b.pMax.y && b.pMin.z <= p.z <= b.pMax.z;
+}
+
+template <typename T> Bounds3<T> expand(const Bounds3<T> &b, T pad) {
+    Point3<T> pMin = Point3<T>(b.pMin.x - pad, b.pMin.y - pad, b.pMin.z - pad);
+    Point3<T> pMax = Point3<T>(b.pMax.x + pad, b.pMax.y + pad, b.pMax.z + pad);
+    return Bounds3<T>(pMin, pMax);
+}
