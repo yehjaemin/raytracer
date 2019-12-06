@@ -2,6 +2,7 @@
 
 - [x] vectors
 - [x] points
+- [ ] normals
 - [x] rays
 - [x] bounds
 - [ ] transforms
