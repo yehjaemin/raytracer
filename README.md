@@ -12,4 +12,6 @@
 - [ ] samplers
 - [ ] integrators
 
+- [ ] floating point error
+
 Remember to update CMakeLists.txt each time a new file is created.
