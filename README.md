@@ -25,7 +25,7 @@
     - T(p) = A(B(C(p)))
     - T = A * B * C
   - swapsHandedness
-    - flip if determinant of upper left 3x3 submatrix id negative
+    - flip if determinant of upper left 3x3 submatrix is negative
 
 ### Base Classes
 - [ ] shapes
