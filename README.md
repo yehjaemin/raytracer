@@ -1,5 +1,6 @@
 # raytracer
 
+### Low-Level Classes
 - [x] vectors
 - [x] points
 - [ ] normals
@@ -7,10 +8,13 @@
 - [x] bounds
 - [ ] transforms
 
+### Base Classes
 - [ ] shapes
+- [ ] cameras
 - [ ] lights
 - [ ] samplers
 - [ ] integrators
+
 
 - [ ] floating point error
 - [ ] animated transforms
