@@ -13,5 +13,6 @@
 - [ ] integrators
 
 - [ ] floating point error
+- [ ] animated transforms
 
 Remember to update CMakeLists.txt each time a new file is created.
