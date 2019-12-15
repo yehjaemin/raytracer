@@ -26,6 +26,7 @@
     - T = A * B * C
   - swapsHandedness
     - flip if determinant of upper left 3x3 submatrix is negative
+- [ ] interactions
 
 ### Base Classes
 - [ ] shapes
