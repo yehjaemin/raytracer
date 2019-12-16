@@ -3,11 +3,7 @@
 ### Low-Level Classes
 - [x] vectors
 - [x] points
-- [ ] normals
-  - normalize
-  - reorient
-  - explicit vector conversion
-  - dot and cross products
+- [x] normals
 - [x] rays
 - [x] bounds
 - [ ] transforms
