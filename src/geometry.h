@@ -13,7 +13,7 @@ public:
         return Vector2(x + v.x, y + v.y);
     }
 
-    Vector2<T> &operator+=(const Vector2<T> &v) const {
+    Vector2<T> &operator+=(const Vector2<T> &v) {
         x += v.x;
         y += v.y;
         return *this;
@@ -23,7 +23,7 @@ public:
         return Vector2(x - v.x, y - v.y);
     }
 
-    Vector2<T> &operator-=(const Vector2<T> &v) const {
+    Vector2<T> &operator-=(const Vector2<T> &v) {
         x -= v.x;
         y -= v.y;
         return *this;
@@ -33,7 +33,7 @@ public:
         return Vector2(u * x, u * y);
     }
 
-    template <typename U> Vector2<T> &operator*=(U u) const {
+    template <typename U> Vector2<T> &operator*=(U u) {
         x *= u;
         y *= u;
         return *this;
@@ -43,9 +43,10 @@ public:
         return Vector2(x / u, y / u);
     }
 
-    template <typename U> Vector2<T> operator/=(U u) const {
-        x /= u;
-        y /= u;
+    template <typename U> Vector2<T> operator/=(U u) {
+        U uInv = 1 / u;
+        x *= uInv;
+        y *= uInv;
         return *this;
     }
 
@@ -84,7 +85,7 @@ public:
         return Vector3(x + v.x, y + v.y, z + v.z);
     }
 
-    Vector3<T> &operator+=(const Vector3<T> &v) const {
+    Vector3<T> &operator+=(const Vector3<T> &v) {
         x += v.x;
         y += v.y;
         z += v.z;
@@ -95,7 +96,7 @@ public:
         return Vector3(x - v.x, y - v.y, z - v.z);
     }
 
-    Vector3<T> operator-=(const Vector3<T> &v) const {
+    Vector3<T> operator-=(const Vector3<T> &v) {
         v -= v.x;
         y -= v.y;
         z -= v.z;
@@ -106,7 +107,7 @@ public:
         return Vector3(u * x, u * y, u * z);
     }
 
-    template <typename U> const Vector3<T> &operator*=(U u) const {
+    template <typename U> const Vector3<T> &operator*=(U u) {
         x *= u;
         y *= u;
         z *= u;
@@ -114,13 +115,15 @@ public:
     }
 
     template <typename U> Vector3<T> operator/(U u) const {
-        return Vector3(x / u, y / u, z / u);
+        U uInv = 1 / u;
+        return Vector3(uInv * x, uInv * y, uInv * z);
     }
 
-    template <typename U> const Vector3<T> &operator/=(U u) const {
-        x /= u;
-        y /= u;
-        z /= u;
+    template <typename U> const Vector3<T> &operator/=(U u) {
+        U uInv = 1 / u;
+        x *= uInv;
+        y *= uInv;
+        z *= uInv;
         return *this;
     }
 
@@ -142,7 +145,7 @@ public:
     }
 
     bool operator!=(const Vector3<T> &v) const {
-        return x != v.x && y != v.y && z != v.z;
+        return x != v.x || y != v.y || z != v.z;
     }
 
     float length() const {
@@ -252,6 +255,123 @@ template <typename T> inline float getDistance(const Point3<T> &p, const Point3<
 
 typedef Point2<float> Point2f;
 typedef Point3<float> Point3f;
+
+template <typename T> class Normal3 {
+public:
+    Normal3() : x(0), y(0), z(0) {}
+    Normal3(T i, T j, T k) : x(i), y(j), z(k) {}
+
+    explicit Normal3<T>(const Vector3<T> &v) : x(v.x), y(v.y), z(v.z) {}
+
+    Normal3<T> operator+(const Normal3<T> &n) const {
+        return Normal3<T>(x + n.x, y + n.y, z + n.z);
+    }
+
+    Normal3<T> &operator+=(const Normal3<T> &n) const {
+        x += n.x;
+        y += n.y;
+        z += n.z;
+        return *this;
+    }
+
+    Normal3<T> operator-(const Normal3<T> &n) const {
+        return Normal3<T>(x - n.x, y - n.y, z - n.z);
+    }
+
+    Normal3<T> operator-=(const Normal3<T> &n) const {
+        x -= n.x;
+        y -= n.y;
+        z -= n.z;
+        return *this;
+    }
+
+    template <typename U> Normal3<T> operator*(U u) const {
+        return Normal3<T>(u * x, u * y, u * z);
+    }
+
+    template <typename U> const Normal3<T> &operator*=(U u) {
+        x *= u;
+        y *= u;
+        z *= u;
+        return *this;
+    }
+
+    template <typename U> Normal3<T> operator/(U u) const {
+        U uInv = 1 / u;
+        return Normal3<T>(uInv * x, uInv * y, uInv * z);
+    }
+
+    template <typename U> const Normal3<T> &operator/=(U u) {
+        U uInv = 1 / u;
+        x *= uInv;
+        y *= uInv;
+        z *= uInv;
+        return *this;
+    }
+
+    Normal3<T> operator-() const {
+        return Normal3<T>(-x, -y, -z);
+    }
+
+    T operator[](int i) {
+        assert(0 <= i && i <= 2);
+        if (i == 0)
+            return x;
+        if (i == 1)
+            return y;
+        return z;
+    }
+
+    bool operator==(const Normal3<T> &n) const {
+        return x == n.x && y == n.y && z == n.z;
+    }
+
+    bool operator!=(const Normal3<T> &n) const {
+        return x != n.x || y != n.y || z != n.z;
+    }
+
+    float length() const {
+        return std::sqrt(x * x + y * y + z* z);
+    }
+
+    T x, y, z;
+};
+
+template <typename T> inline Normal3<T> normalize(const Normal3<T> &n) {
+    return n / n.length();
+}
+
+template <typename T> inline Normal3<T> reorient(const Normal3<T> &n, const Vector3<T> &v) {
+    if (dot(n, v) < 0)
+        return -n;
+    return n;;;
+}
+
+template <typename T> inline T dot(const Normal3<T> &n1, const Normal3<T> &n2) {
+    return n1.x * n2.x + n1.y * n2.y + n1.z * n2.z;
+}
+
+template <typename T> inline T dot(const Normal3<T> &n, const Vector3<T> &v) {
+    return n.x * v.x + n.y * v.y + n.z * v.z;
+}
+
+template <typename T> inline T dot(const Vector3<T> &v, const Normal3<T> &n) {
+    return v.x * n.x + v.y * n.y + v.z * n.z;
+}
+
+template <typename T> inline T cross(const Normal3<T> &n, const Vector3<T> &v) {
+    return Vector3<T>(n.y * v.z - n.z * v.y,
+                      n.z * v.x - n.x * v.z,
+                      n.x * v.y - n.y * v.x);
+}
+
+template <typename T> inline T cross(const Vector3<T> &v, const Normal3<T> &n) {
+    return Vector3<T>(v.y * n.z - v.z * n.y,
+                      v.z * n.x - v.x * n.z,
+                      v.x * n.y - v.y * n.x);
+}
+
+typedef Normal3<float> Normal3f;
 
 class Ray {
 public:
