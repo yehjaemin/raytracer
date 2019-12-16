@@ -347,6 +347,30 @@ template <typename T> inline Normal3<T> reorient(const Normal3<T> &n, const Vect
     return n;;;
 }
 
+template <typename T> inline T dot(const Normal3<T> &n1, const Normal3<T> &n2) {
+    return n1.x * n2.x + n1.y * n2.y + n1.z * n2.z;
+}
+
+template <typename T> inline T dot(const Normal3<T> &n, const Vector3<T> &v) {
+    return n.x * v.x + n.y * v.y + n.z * v.z;
+}
+
+template <typename T> inline T dot(const Vector3<T> &v, const Normal3<T> &n) {
+    return v.x * n.x + v.y * n.y + v.z * n.z;
+}
+
+template <typename T> inline T cross(const Normal3<T> &n, const Vector3<T> &v) {
+    return Vector3<T>(n.y * v.z - n.z * v.y,
+                      n.z * v.x - n.x * v.z,
+                      n.x * v.y - n.y * v.x);
+}
+
+template <typename T> inline T cross(const Vector3<T> &v, const Normal3<T> &n) {
+    return Vector3<T>(v.y * n.z - v.z * n.y,
+                      v.z * n.x - v.x * n.z,
+                      v.x * n.y - v.y * n.x);
+}
+
 typedef Normal3<float> Normal3f;
 
 class Ray {
