@@ -261,8 +261,10 @@ public:
     Normal3() : x(0), y(0), z(0) {}
     Normal3(T i, T j, T k) : x(i), y(j), z(k) {}
 
+    explicit Normal3<T>(const Vector3<T> &v) : x(v.x), y(v.y), z(v.z) {}
+
     Normal3<T> operator+(const Normal3<T> &n) const {
-        return Normal3(x + n.x, y + n.y, z + n.z);
+        return Normal3<T>(x + n.x, y + n.y, z + n.z);
     }
 
     Normal3<T> &operator+=(const Normal3<T> &n) const {
@@ -273,7 +275,7 @@ public:
     }
 
     Normal3<T> operator-(const Normal3<T> &n) const {
-        return Normal3(x - n.x, y - n.y, z - n.z);
+        return Normal3<T>(x - n.x, y - n.y, z - n.z);
     }
 
     Normal3<T> operator-=(const Normal3<T> &n) const {
@@ -284,7 +286,7 @@ public:
     }
 
     template <typename U> Normal3<T> operator*(U u) const {
-        return Normal3(u * x, u * y, u * z);
+        return Normal3<T>(u * x, u * y, u * z);
     }
 
     template <typename U> const Normal3<T> &operator*=(U u) {
@@ -296,7 +298,7 @@ public:
 
     template <typename U> Normal3<T> operator/(U u) const {
         U uInv = 1 / u;
-        return Normal3(uInv * x, uInv * y, uInv * z);
+        return Normal3<T>(uInv * x, uInv * y, uInv * z);
     }
 
     template <typename U> const Normal3<T> &operator/=(U u) {
@@ -308,7 +310,7 @@ public:
     }
 
     Normal3<T> operator-() const {
-        return Normal3(-x, -y, -z);
+        return Normal3<T>(-x, -y, -z);
     }
 
     T operator[](int i) {
@@ -334,6 +336,16 @@ public:
 
     T x, y, z;
 };
+
+template <typename T> inline Normal3<T> normalize(const Normal3<T> &n) {
+    return n / n.length();
+}
+
+template <typename T> inline Normal3<T> reorient(const Normal3<T> &n, const Vector3<T> &v) {
+    if (dot(n, v) < 0)
+        return -n;
+    return n;;;
+}
 
 typedef Normal3<float> Normal3f;
 
