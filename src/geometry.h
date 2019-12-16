@@ -424,9 +424,9 @@ public:
         return pMin != b.pMin || pMax != b.pMax;
     }
 
-    Point2<T> lerp(const Point2f &t) const {
-        return Point2<T>(untitled::lerp(t.x, pMin.x, pMax.x), untitled::lerp(t.y, pMin.y, pMax.y));
-    }
+//    Point2<T> lerp(const Point2f &t) const {
+//        return Point2<T>(untitled::lerp(t.x, pMin.x, pMax.x), untitled::lerp(t.y, pMin.y, pMax.y));
+//    }
 
     Point2<T> offset(const Point2<T> &p) const {
         Point2<T> q = p - pMin;
@@ -492,9 +492,9 @@ public:
         return pMin != b.pMin && pMax == b.pMax;
     }
 
-    Point3<T> lerp(const Point3f &t) const {
-        return Point3<T>(untitled::lerp(t.x, pMin.x, pMax.x), untitled::lerp(t.y, pMin.y, pMax.y), untitled::lerp(t.z, pMin.z, pMax.z));
-    }
+//    Point3<T> lerp(const Point3f &t) const {
+//        return Point3<T>(untitled::lerp(t.x, pMin.x, pMax.x), untitled::lerp(t.y, pMin.y, pMax.y), untitled::lerp(t.z, pMin.z, pMax.z));
+//    }
 
     Point3<T> offset(const Point3<T> &p) const {
         Point3<T> q = p - pMin;

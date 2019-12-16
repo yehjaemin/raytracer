@@ -1,13 +1,13 @@
 # raytracer
 
+### Low-Level Classes
 - [x] vectors
 - [x] points
 - [ ] normals
   - normalize
   - reorient
-  - explicit Vector3 conversion
-  - dot and cross product
-    - can’t cross normals with each other
+  - explicit vector conversion
+  - dot and cross products
 - [x] rays
 - [x] bounds
 - [ ] transforms
@@ -19,17 +19,24 @@
   - rays
     - error bounding on origin
   - bounds
-    - transform corners and find box OR
+    - transform all corners and find new box OR
     - optimize using corner max / min components
   - transforms
     - T(p) = A(B(C(p)))
     - T = A * B * C
   - swapsHandedness
-    - determinant of upper left 3x3 sub matrix is negative
+    - flip if determinant of upper left 3x3 submatrix is negative
+- [ ] interactions
 
+### Base Classes
 - [ ] shapes
+- [ ] cameras
 - [ ] lights
 - [ ] samplers
 - [ ] integrators
+
+### Features
+- [ ] floating point error
+- [ ] animated transforms
 
 Remember to update CMakeLists.txt each time a new file is created.
