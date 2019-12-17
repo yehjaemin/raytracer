@@ -1,5 +1,7 @@
+#pragma once
+
 namespace untitled {
-//inline float lerp(float t, float u, float v) {
-//    return (1 - t) * u + t * v;
-//}
+inline float lerp(float t, float a, float b) {
+    return (1 - t) * a + t * b;
+}
 } // namespace untitled

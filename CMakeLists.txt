@@ -11,6 +11,7 @@ set(core_source
 set(core_headers
     src/geometry.h
 #    src/shape.h
+    src/untitled.h
 )
 
 add_library(lib
