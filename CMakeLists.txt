@@ -5,11 +5,13 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(core_source
     src/geometry.cc
+    src/transform.cc
 #    src/shape.cc
 )
 
 set(core_headers
     src/geometry.h
+    src/transform.h
 #    src/shape.h
     src/untitled.h
 )
