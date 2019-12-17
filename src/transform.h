@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstring>
+#include "geometry.h"
 #include "untitled.h"
 
 struct Matrix4 {
@@ -25,14 +26,12 @@ struct Matrix4 {
 
     Matrix4 operator*(const Matrix4 &that) const {
         float p[4][4];
-        for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 4; ++j) {
+        for (int i = 0; i < 4; ++i)
+            for (int j = 0; j < 4; ++j)
                 p[i][j] = m[i][0] * that.m[0][j] + 
                           m[i][1] * that.m[1][j] + 
                           m[i][2] * that.m[2][j] + 
                           m[i][3] * that.m[3][j];
-            }
-        }
         return Matrix4(p);
     }
 
@@ -52,22 +51,22 @@ struct Matrix4 {
         return false;
     }
 
-    Matrix4 transpose() const {
-        float t[4][4];
-        for (int i = 0; i < 4; ++i)
-            for (int j = 0; j < 4; ++j)
-                t[i][j] = m[j][i];
-        return Matrix4(t);
-    }
-
-    Matrix4 inverse() const {
-        // TODO Gauss-Jordan elimination
-        float inv[4][4];
-        return Matrix4(inv);
-    }
-
     float m[4][4];
 };
+
+Matrix4 transpose(const Matrix4 &m) {
+    float t[4][4];
+    for (int i = 0; i < 4; ++i)
+        for (int j = 0; j < 4; ++j)
+            t[i][j] = m.m[j][i];
+    return Matrix4(t);
+}
+
+Matrix4 inverse(const Matrix4 &m) {
+    // TODO Gauss-Jordan elimination
+    float inv[4][4];
+    return Matrix4(inv);
+}
 
 class Transform {
 public:
@@ -75,6 +74,37 @@ public:
     Transform(const Matrix4 &m) : m(m) {}
     Transform(const Matrix4 &m, const Matrix4 &mInv) : m(m), mInv(mInv) {}
 
+    bool operator==(const Transform& t) const {
+        return m == t.m && mInv == t.mInv;
+    }
+
+    bool operator!=(const Transform& t) const {
+        return m != t.m || mInv == t.mInv;
+    }
+
+    Matrix4 getMatrix() const {
+        return m;
+    }
+
+    Matrix4 getInverseMatrix() const {
+        return mInv;
+    }
+
+    template <typename T> Vector3<T> operator()(const Vector3<T> &v) const;
+    template <typename T> Point3<T> operator()(const Point3<T> &p) const;
+    template <typename T> Normal3<T> operator()(const Normal3<T> &n) const;
+    template <typename T> Ray3<T> operator()(const Ray3<T> &r) const;
+    template <typename T> Bounds3<T> operator()(const Bounds3<T> &b) const;
+    Transform operator()(const Transform &t) const;
+
 private:
     Matrix4 m, mInv;
 };
+
+Transform transpose(const Transform &m) {
+    return Transform(transpose(m.getMatrix()), transpose(m.getInverseMatrix()));
+}
+
+Transform inverse(const Transform &m) {
+    return Transform(m.getInverseMatrix(), m.getMatrix());
+}
