@@ -5,8 +5,12 @@
 - [x] points
 - [x] normals
 - [x] rays
+  - REMEMBER TO TEMPLATE RAY CLASS
+  - template <typename T> class Ray3
+  - typedef Ray3<float> Ray3f
 - [x] bounds
 - [ ] transforms
+  - inverse
   - points
   - vectors
     - simplified point transform
