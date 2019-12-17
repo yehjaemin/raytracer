@@ -13,6 +13,7 @@ set(core_headers
     src/geometry.h
     src/transform.h
 #    src/shape.h
+    src/untitled.h
 )
 
 add_library(lib
