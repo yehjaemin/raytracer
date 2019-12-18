@@ -63,9 +63,40 @@ Matrix4 transpose(const Matrix4 &m) {
 }
 
 Matrix4 inverse(const Matrix4 &m) {
-    // TODO Gauss-Jordan elimination
-    float inv[4][4];
-    return Matrix4(inv);
+    // Gauss-Jordan elimination
+    // choose largest possible abs value pivot
+    // this improves numerical stability with floating point
+
+    // mInv will be transformed in place
+    Matrix4 mInv;
+    std::memcpy(mInv, m, 16 * sizeof(float));
+
+    int h = 0, k = 0;
+    while (h < 4 && k < 4) {
+        // find k-th pivot
+        float big = 0.f;
+        int i_max = h;
+        for (int i = h; i < 4; ++i) {
+            if (mInv[i][k] > big) {
+                big = mInv[i][k];
+                i_max = i;
+            }
+        }
+
+        if (mInv[i_max, k] == 0) { // col k has no pivot
+            ++k;
+        } else {
+            // swap row h and row i_max
+            float tmp;
+            for (int j = 0; j < 4; ++j) {
+                tmp = mInv[h][j];
+                mInv[h][j] = mInv[i_max][j];
+                mInv[i_max][j] = tmp;
+            }
+
+
+        }
+    }
 }
 
 class Transform {
