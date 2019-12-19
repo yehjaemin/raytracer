@@ -15,10 +15,10 @@ Matrix4 inverse(const Matrix4 &m) {
         // keep track of piv rows and cols
     // max abs val pivs for numerical stability
 
-    stack<int> pivrow, pivcol;
+    std::stack<int> pivrow, pivcol;
     int locked[4] = {0, 0, 0, 0};
     float minv[4][4];
-    std::memcpy(minv, m, 16 * sizeof(float));
+    std::memcpy(minv, m.m, 16 * sizeof(float));
 
     for (int p = 0; p < 4; ++p) {
         int row = 0, col = 0;
@@ -28,7 +28,7 @@ Matrix4 inverse(const Matrix4 &m) {
         for (int i = 0; i < 4; ++i) {
             if (locked[i] != 1) {
                 for (int j = 0; j < 4; ++j) {
-                    assert(locked[k] <= 1); // otherwise singular matrix
+                    assert(locked[j] <= 1); // otherwise singular matrix
                     if (locked[j] == 0) {
                         // 1) not in locked
                         // 2) max abs val
@@ -58,7 +58,7 @@ Matrix4 inverse(const Matrix4 &m) {
 
         // normalize piv row
         assert(big != 0.f); // otherwise singular matrix
-        float div = 1.f / minv[icol][icol]; // account for negative
+        float div = 1.f / minv[col][col]; // account for negative
         minv[col][col] = 1.f; // piv stores inverse value
         for (int j = 0; j < 4; ++j)
             minv[col][j] *= div;
@@ -74,11 +74,13 @@ Matrix4 inverse(const Matrix4 &m) {
         }
     }
 
-    // swap cols
+    // for each row swapped,
+    // swap col in reverse order
     // assert(pivrow.size() == 4);
     // assert(pivcol.size() == 4);
     while (!pivrow.empty()) {
-        int row = pivrow.pop(), col = pivcol.pop();
+        int row = pivrow.top(), col = pivcol.top();
+        pivrow.pop(); pivcol.pop();
         if (row != col)
             for (int i = 0; i < 4; ++i)
                 std::swap(minv[i][row], minv[i][col]);
