@@ -67,11 +67,11 @@ Matrix4 inverse(const Matrix4 &m) {
     // choose largest possible abs value pivot
     // this improves numerical stability with floating point
 
-    int indxr[4], indxc[4];
-    int ipiv[4] = {0, 0, 0, 0};
-    Matrix4 mInv;
+    int indxr[4], indxc[4]; // record pivots' original row and col
+    int ipiv[4] = {0, 0, 0, 0}; // keep track of rows that got pivoted
+    float mInv[4][4];
     std::memcpy(mInv, m, 16 * sizeof(float));
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) { // traverse for pivots
         int irow = 0, icol = 0;
         float big = 0.f;
 
@@ -82,7 +82,7 @@ Matrix4 inverse(const Matrix4 &m) {
                     assert(ipiv[k] < 1); // otherwise singular matrix
                     if (ipiv[k] == 0) {
                         float num = std::abs(mInv[j][k]);
-                        if (num >= big) { // choose col with largest pivot
+                        if (num >= big) { // >= for rightmost bottommost
                             big = num;
                             irow = j;
                             icol = k;
@@ -106,8 +106,8 @@ Matrix4 inverse(const Matrix4 &m) {
 
         // normalize pivot's row
         assert(big != 0.f); // otherwise singular matrix
-        float pivinv = 1.f / big;
-        mInv[icol][icol] = 1.f;
+        float pivinv = 1.f / mInv[icol][icol]; // account for negative
+        mInv[icol][icol] = 1.f; // pivot's col gets divided twice
         for (int k = 0; k < 4; ++k)
             mInv[icol][k] *= pivinv;
 
@@ -115,7 +115,7 @@ Matrix4 inverse(const Matrix4 &m) {
         for (int j = 0; j < 4; ++j) { // traverse rows
             if (j != icol) { // skip pivot's row
                 float save = mInv[j][icol];
-                mInv[j][icol] = 0;
+                mInv[j][icol] = 0; // pivot's col gets subtracted twice
                 for (int k = 0; k < 4; ++k) { // traverse cols
                     mInv[j][k] -= mInv[icol][k] * save;
                 }
