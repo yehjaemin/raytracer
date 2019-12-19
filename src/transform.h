@@ -67,36 +67,70 @@ Matrix4 inverse(const Matrix4 &m) {
     // choose largest possible abs value pivot
     // this improves numerical stability with floating point
 
-    // mInv will be transformed in place
+    int indxr[4], indxc[4];
+    int ipiv[4] = {0, 0, 0, 0};
     Matrix4 mInv;
     std::memcpy(mInv, m, 16 * sizeof(float));
-
-    int h = 0, k = 0;
-    while (h < 4 && k < 4) {
-        // find k-th pivot
+    for (int i = 0; i < 4; ++i) {
+        int irow = 0, icol = 0;
         float big = 0.f;
-        int i_max = h;
-        for (int i = h; i < 4; ++i) {
-            if (mInv[i][k] > big) {
-                big = mInv[i][k];
-                i_max = i;
+
+        // choose pivot
+        for (int j = 0; j < 4; ++j) { // traverse rows
+            if (ipiv[j] != 1) {
+                for (int k = 0; k < 4; ++k) { // traverse cols
+                    assert(ipiv[k] < 1); // otherwise singular matrix
+                    if (ipiv[k] == 0) {
+                        float num = std::abs(mInv[j][k]);
+                        if (num >= big) { // choose col with largest pivot
+                            big = num;
+                            irow = j;
+                            icol = k;
+                        }
+                    }
+                }
             }
         }
+        // mark col after choosing pivot
+        ++ipiv[icol];
 
-        if (mInv[i_max, k] == 0) { // col k has no pivot
-            ++k;
-        } else {
-            // swap row h and row i_max
-            float tmp;
-            for (int j = 0; j < 4; ++j) {
-                tmp = mInv[h][j];
-                mInv[h][j] = mInv[i_max][j];
-                mInv[i_max][j] = tmp;
+        // record row and col of pivot
+        indxr[i] = irow;
+        indxc[i] = icol;
+
+        // swap rows so that pivot is on the diagonal
+        // pivot will move to mInv[icol][icol]
+        if (irow != icol)
+            for (int k = 0; k < 4; ++k)
+                std::swap(mInv[irow][k], mInv[icol][k]);
+
+        // normalize pivot's row
+        assert(big != 0.f); // otherwise singular matrix
+        float pivinv = 1.f / big;
+        mInv[icol][icol] = 1.f;
+        for (int k = 0; k < 4; ++k)
+            mInv[icol][k] *= pivinv;
+
+        // zero out pivot's col by subtracting pivot's row
+        for (int j = 0; j < 4; ++j) { // traverse rows
+            if (j != icol) { // skip pivot's row
+                float save = mInv[j][icol];
+                mInv[j][icol] = 0;
+                for (int k = 0; k < 4; ++k) { // traverse cols
+                    mInv[j][k] -= mInv[icol][k] * save;
+                }
             }
-
-
         }
     }
+
+    // swap cols to reflect pivot
+    for (int j = 3; j >= 0; --j) {
+        if (indxr[j] != indxc[j]) {
+            for (int k = 0; k < 4; ++k)
+                std::swap(mInv[k][indxr[j]], mInv[k][indxc[j]]);
+        }
+    }
+    return Matrix4(mInv);
 }
 
 class Transform {
