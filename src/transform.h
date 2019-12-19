@@ -64,6 +64,8 @@ Matrix4 transpose(const Matrix4 &m) {
 
 Matrix4 inverse(const Matrix4 &m) {
     // Gauss-Jordan elimination
+    // instead of having an aux identity matrix,
+    // we treat the pivot's col as an identity col
     // choose largest possible abs value pivot
     // this improves numerical stability with floating point
 
