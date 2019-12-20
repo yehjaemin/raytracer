@@ -5,37 +5,42 @@
 - [x] points
 - [x] normals
 - [x] rays
-  - REMEMBER TO TEMPLATE RAY CLASS
-  - template <typename T> class Ray3
-  - typedef Ray3<float> Ray3f
 - [x] bounds
-- [ ] transforms
+- [x] transforms - the columns of a transformation matrix give the effect of the transformation on the basis of a coordinate system
+  - translate
+  - scale
+  - rotate
   - inverse
-  - points
-  - vectors
-    - simplified point transform
-  - normals
-    - transform in terms of tangent
-  - rays
-    - error bounding on origin
-  - bounds
-    - transform all corners and find new box OR
-    - optimize using corner max / min components
-  - transforms
-    - T(p) = A(B(C(p)))
-    - T = A * B * C
-  - swapsHandedness
-    - flip if determinant of upper left 3x3 submatrix is negative
+  - lookAt
 - [ ] interactions
+  - do this after looking at shapes
+  - public variables - Point3f p, float time, Vector3f wo, Normal3f n
+  - public methods - constructors, isSurfaceInteraction(), isMediumInteraction(), spawnRay(), spawnRayTo()
+  - class SurfaceInteraction : public Interaction {...};
 
 ### Base Classes
 - [ ] shapes
+  - Sphere
 - [ ] cameras
+  - public variables - Transform cameraToWorld, Film film
 - [ ] lights
+  - this might not be necessary
+  - do this after spectrum
 - [ ] samplers
 - [ ] integrators
+  - SamplerIntegrator
+
+## Main Rendering Loop
+- [ ] scene
+  - create a test scene and directly feed it into the rendering loop
+  - Scene <-- simplify this
+- [ ] film
+- [ ] spectrum
+  - RGBSpectrum
 
 ### Features
+- [ ] parallel
+  - parallelFor
 - [ ] floating point error
 - [ ] animated transforms
 
