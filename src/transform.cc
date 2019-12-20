@@ -223,21 +223,21 @@ Transform rotate(float theta, const Vector3f &axis) {
     Matrix4 m;
 
     // rotate first basis vector
-    m.m[0][0] = a.x * a.x + (1 - a.x * a.x) * cosTheta; 
-    m.m[0][1] = a.x * a.y * (1 - cosTheta) - a.z * sinTheta;
-    m.m[0][2] = a.x * a.z * (1 - cosTheta) + a.y * sinTheta;
+    m.m[0][0] = a.x * a.x + (1 - a.x * a.x) * c; 
+    m.m[0][1] = a.x * a.y * (1 - c) - a.z * s;
+    m.m[0][2] = a.x * a.z * (1 - c) + a.y * s;
     m.m[0][3] = 0;
 
     // rotate second basis vector
-    m.m[1][0] = a.x * a.y * (1 - cosTheta) + a.z * sinTheta;
-    m.m[1][1] = a.y * a.y + (1 - a.y * a.y) * cosTheta;
-    m.m[1][2] = a.y * a.z * (1 - cosTheta) - a.x * sinTheta;
+    m.m[1][0] = a.x * a.y * (1 - c) + a.z * s;
+    m.m[1][1] = a.y * a.y + (1 - a.y * a.y) * c;
+    m.m[1][2] = a.y * a.z * (1 - c) - a.x * s;
     m.m[1][3] = 0;
 
     // rotate third basis vector
-    m.m[2][0] = a.x * a.z * (1 - cosTheta) - a.y * sinTheta;
-    m.m[2][1] = a.y * a.z * (1 - cosTheta) + a.x * sinTheta;
-    m.m[2][2] = a.z * a.z + (1 - a.z * a.z) * cosTheta;
+    m.m[2][0] = a.x * a.z * (1 - c) - a.y * s;
+    m.m[2][1] = a.y * a.z * (1 - c) + a.x * s;
+    m.m[2][2] = a.z * a.z + (1 - a.z * a.z) * c;
     m.m[2][3] = 0;
     return Transform(m, transpose(m));
 }
