@@ -32,6 +32,7 @@ void render() {
     // R increases top to bottom
     // G increases left to right
     // B remains at 0
+    // constrain values within range of [0, 1]
     for (int i = 0; i < height; ++i)
         for (int j = 0; j < width; ++j)
             framebuffer[i * width + j] = Vector3f(i / float(height), j / float(width), std::abs(std::sin(i * width + j)));
@@ -42,11 +43,9 @@ void render() {
     ofs << "P6" << std::endl;
     ofs << width << " " << height << std::endl;
     ofs << "255" << std::endl;
-
-    // constrain spectrum from 0.f to 255.f
     for (int i = 0; i < width * height; ++i)
         for (int j = 0; j < 3; ++j)
-            ofs << char(255 * std::max(0.f, std::min(1.f, framebuffer[i][j])));
+            ofs << char(255 * framebuffer[i][j]);
     ofs.close();
 }
 
