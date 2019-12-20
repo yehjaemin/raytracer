@@ -101,3 +101,11 @@ Transform transpose(const Transform &m) {
 Transform inverse(const Transform &m) {
     return Transform(m.getInverseMatrix(), m.getMatrix());
 }
+
+Transform translate(const Vector3f &delta);
+Transform scale(const Vector3f &mag);
+Transform rotateX(float theta);
+Transform rotateY(float theta);
+Transform rotateZ(float theta);
+Transform rotate(float theta, const Vector3f &axis);
+Transform lookAt(const Point3f &pos, const Point3f &look, const Vector3f &up);
