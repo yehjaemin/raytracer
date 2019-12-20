@@ -161,3 +161,94 @@ bool Transform::swapsHandedness() const {
                 m.m[0][2] * (m.m[1][0] * m.m[2][1] - m.m[1][1] * m.m[2][0]);
     return det < 0;
 }
+
+Transform translate(const Vector3f &delta) {
+    Matrix4 m(1, 0, 0, delta.x,
+              0, 1, 0, delta.y,
+              0, 0, 1, delta.z,
+              0, 0, 0,       1);
+    Matrix4 mInv(1, 0, 0, -delta.x,
+                 0, 1, 0, -delta.y,
+                 0, 0, 1, -delta.z,
+                 0, 0, 0,        1);
+    return Transform(m, mInv);
+}
+
+Transform scale(const Vector3f &mag) {
+    Matrix4 m(mag.x,     0,     0, 0,
+                  0, mag.y,     0, 0,
+                  0,     0, mag.z, 0,
+                  0,     0,     0, 1);
+    Matrix4 mInv(1 / mag.x,         0,         0, 0,
+                         0, 1 / mag.y,         0, 0,
+                         0,         0, 1 / mag.z, 0,
+                         0,         0,         0, 1);
+    return Transform(m, mInv);
+}
+
+Transform rotateX(float theta) {
+    float c = std::cos(theta);
+    float s = std::sin(theta);
+    Matrix4 m(1, 0,  0, 0,
+              0, c, -s, 0,
+              0, s,  c, 0,
+              0, 0,  0, 1);
+    return Transform(m, transpose(m));
+}
+
+Transform rotateY(float theta) {
+    float c = std::cos(theta);
+    float s = std::sin(theta);
+    Matrix4 m( c, 0, s, 0,
+               0, 1, 0, 0,
+              -s, 0, c, 0,
+               0, 0, 0, 1);
+    return Transform(m, transpose(m));
+}
+
+Transform rotateZ(float theta) {
+    float c = std::cos(theta);
+    float s = std::sin(theta);
+    Matrix4 m(c, -s, 0, 0,
+              s,  c, 0, 0,
+              0,  0, 1, 0,
+              0,  0, 0, 1);
+    return Transform(m, transpose(m));
+}
+
+Transform rotate(float theta, const Vector3f &axis) {
+    Vector3f a = normalize(axis);
+    float c = std::cos(theta);
+    float s = std::sin(theta);
+    Matrix4 m;
+
+    // rotate first basis vector
+    m.m[0][0] = a.x * a.x + (1 - a.x * a.x) * cosTheta; 
+    m.m[0][1] = a.x * a.y * (1 - cosTheta) - a.z * sinTheta;
+    m.m[0][2] = a.x * a.z * (1 - cosTheta) + a.y * sinTheta;
+    m.m[0][3] = 0;
+
+    // rotate second basis vector
+    m.m[1][0] = a.x * a.y * (1 - cosTheta) + a.z * sinTheta;
+    m.m[1][1] = a.y * a.y + (1 - a.y * a.y) * cosTheta;
+    m.m[1][2] = a.y * a.z * (1 - cosTheta) - a.x * sinTheta;
+    m.m[1][3] = 0;
+
+    // rotate third basis vector
+    m.m[2][0] = a.x * a.z * (1 - cosTheta) - a.y * sinTheta;
+    m.m[2][1] = a.y * a.z * (1 - cosTheta) + a.x * sinTheta;
+    m.m[2][2] = a.z * a.z + (1 - a.z * a.z) * cosTheta;
+    m.m[2][3] = 0;
+    return Transform(m, transpose(m));
+}
+
+Transform lookAt(const Point3f &pos, const Point3f &look, const Vector3f &up) {
+    Matrix4 cameraToWorld;
+
+    // fourth col gives the point that the camera space origin maps to in world space
+    // this is the camera position, supplied by pos
+    cameraToWorld[0][3] = pos.x;
+    cameraToWorld[1][3] = pos.y;
+    cameraToWorld[2][3] = pos.z;
+    cameraToWorld[3][3] = 1;
+}
