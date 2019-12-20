@@ -247,8 +247,34 @@ Transform lookAt(const Point3f &pos, const Point3f &look, const Vector3f &up) {
 
     // fourth col gives the point that the camera space origin maps to in world space
     // this is the camera position, supplied by pos
-    cameraToWorld[0][3] = pos.x;
-    cameraToWorld[1][3] = pos.y;
-    cameraToWorld[2][3] = pos.z;
-    cameraToWorld[3][3] = 1;
+    cameraToWorld.m[0][3] = pos.x;
+    cameraToWorld.m[1][3] = pos.y;
+    cameraToWorld.m[2][3] = pos.z;
+    cameraToWorld.m[3][3] = 1;
+    
+    // third col gives the world space direction that the +z axis in camera space maps to
+    // this is the direction from the camera to the look-at point
+    Vector3f dir = normalize(look - pos);
+    cameraToWorld.m[0][2] = dir.x;
+    cameraToWorld.m[1][2] = dir.y;
+    cameraToWorld.m[2][2] = dir.z;
+    cameraToWorld.m[3][2] = 0;
+
+    // first col gives the world space direction that the +x axis in camera space maps to
+    // this is the cross product of the up and dir vectors
+    Vector3f right = normalize(cross(up, dir));
+    cameraToWorld.m[0][0] = right.x;
+    cameraToWorld.m[1][0] = right.y;
+    cameraToWorld.m[2][0] = right.z;
+    cameraToWorld.m[3][0] = 0;
+
+    // second col gives the world space direction that the +y axis in camera space maps to
+    // this is the cross product of the dir and right vectors
+    // (recomputed to ensure that y and z are perpendicular)
+    Vector3f newUp = normalize(cross(dir, right));
+    cameraToWorld.m[0][1] = newUp.x;
+    cameraToWorld.m[1][1] = newUp.y;
+    cameraToWorld.m[2][1] = newUp.z;
+    cameraToWorld.m[3][1] = 0;
+    return Transform(inverse(cameraToWorld), cameraToWorld);
 }
