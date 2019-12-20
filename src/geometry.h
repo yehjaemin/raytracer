@@ -375,19 +375,21 @@ template <typename T> inline T cross(const Vector3<T> &v, const Normal3<T> &n) {
 
 typedef Normal3<float> Normal3f;
 
-class Ray {
+template <typename T> class Ray3 {
 public:
-    Ray() : tMax(std::numeric_limits<float>::infinity()), time(0.f) {}
-    Ray(const Point3f &o, const Vector3f &d, float tMax = std::numeric_limits<float>::infinity(), float time = 0.f) : o(o), d(d), tMax(tMax), time(time) {}
-    Point3f operator ()(float t) const {
+    Ray3() : tMax(std::numeric_limits<T>::infinity()), time(0.f) {}
+    Ray3(const Point3<T> &o, const Vector3<T> &d, T tMax = std::numeric_limits<T>::infinity(), T time = 0.f) : o(o), d(d), tMax(tMax), time(time) {}
+    Point3<T> operator ()(T t) const {
         return o + d * t;
     }
 
-    Point3f o; // origin
-    Vector3f d; // direction
-    float tMax; // r(t) = o + dt
-    float time;
+    Point3<T> o; // origin
+    Vector3<T> d; // direction
+    T tMax; // r(t) = o + dt
+    T time;
 };
+
+typedef Ray3<float> Ray3f;
 
 template <typename T> class Bounds2 {
 public:
