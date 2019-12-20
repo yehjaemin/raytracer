@@ -88,6 +88,8 @@ public:
     template <typename T> Bounds3<T> operator()(const Bounds3<T> &b) const;
     Transform operator()(const Transform &t) const;
 
+    bool swapsHandedness() const;
+
 private:
     Matrix4 m, mInv;
 };

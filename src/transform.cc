@@ -153,3 +153,11 @@ Transform Transform::operator()(const Transform &t) const {
     // inverse(A * B) = inverse(B) * inverse(A)
     return Transform(m * t.m, t.mInv * mInv);
 }
+
+bool Transform::swapsHandedness() const {
+    // swaps if det of upper left 3x3 submatrix if negative
+    float det = m.m[0][0] * (m.m[1][1] * m.m[2][2] - m.m[1][2] * m.m[2][1]) - 
+                m.m[0][1] * (m.m[1][0] * m.m[2][2] - m.m[1][2] * m.m[2][0]) + 
+                m.m[0][2] * (m.m[1][0] * m.m[2][1] - m.m[1][1] * m.m[2][0]);
+    return det < 0;
+}
