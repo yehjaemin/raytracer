@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstring>
+#include <stack>
 #include "geometry.h"
 #include "untitled.h"
 
@@ -54,50 +55,9 @@ struct Matrix4 {
     float m[4][4];
 };
 
-Matrix4 transpose(const Matrix4 &m) {
-    float t[4][4];
-    for (int i = 0; i < 4; ++i)
-        for (int j = 0; j < 4; ++j)
-            t[i][j] = m.m[j][i];
-    return Matrix4(t);
-}
+Matrix4 transpose(const Matrix4 &m);
 
-Matrix4 inverse(const Matrix4 &m) {
-    // Gauss-Jordan elimination
-    // choose largest possible abs value pivot
-    // this improves numerical stability with floating point
-
-    // mInv will be transformed in place
-    Matrix4 mInv;
-    std::memcpy(mInv, m, 16 * sizeof(float));
-
-    int h = 0, k = 0;
-    while (h < 4 && k < 4) {
-        // find k-th pivot
-        float big = 0.f;
-        int i_max = h;
-        for (int i = h; i < 4; ++i) {
-            if (mInv[i][k] > big) {
-                big = mInv[i][k];
-                i_max = i;
-            }
-        }
-
-        if (mInv[i_max, k] == 0) { // col k has no pivot
-            ++k;
-        } else {
-            // swap row h and row i_max
-            float tmp;
-            for (int j = 0; j < 4; ++j) {
-                tmp = mInv[h][j];
-                mInv[h][j] = mInv[i_max][j];
-                mInv[i_max][j] = tmp;
-            }
-
-
-        }
-    }
-}
+Matrix4 inverse(const Matrix4 &m);
 
 class Transform {
 public:
@@ -128,6 +88,8 @@ public:
     template <typename T> Bounds3<T> operator()(const Bounds3<T> &b) const;
     Transform operator()(const Transform &t) const;
 
+    bool swapsHandedness() const;
+
 private:
     Matrix4 m, mInv;
 };
@@ -139,3 +101,11 @@ Transform transpose(const Transform &m) {
 Transform inverse(const Transform &m) {
     return Transform(m.getInverseMatrix(), m.getMatrix());
 }
+
+Transform translate(const Vector3f &delta);
+Transform scale(const Vector3f &mag);
+Transform rotateX(float theta);
+Transform rotateY(float theta);
+Transform rotateZ(float theta);
+Transform rotate(float theta, const Vector3f &axis);
+Transform lookAt(const Point3f &pos, const Point3f &look, const Vector3f &up);
