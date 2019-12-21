@@ -3,10 +3,16 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 11)
 
+include_directories(src)
+include_directories(src/core)
+include_directories(src/shapes)
+
 add_executable(untitled
-    src/untitled.cc src/untitled.h
-    src/camera.cc src/camera.h
-    src/sphere.cc src/sphere.h
-    src/transform.cc src/transform.h
-    src/geometry.cc src/geometry.h
+    src/main/untitled.cc    src/core/untitled.h
+    src/core/integrator.cc  src/core/integrator.h
+    src/core/camera.cc      src/core/camera.h
+    src/shapes/sphere.cc    src/shapes/sphere.h
+    src/core/film.cc        src/core/film.h
+    src/core/transform.cc   src/core/transform.h
+    src/core/geometry.cc    src/core/geometry.h
 )

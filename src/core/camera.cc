@@ -1,6 +1,6 @@
 #include "camera.h"
 
-Vector3f castRay(const Ray3f &r, const Sphere &s) {
+Vector3f BasicCamera::castRay(const Ray3f &r, const Sphere &s) {
     // sphere is blue
     // background is white
     if (s.isect(r))

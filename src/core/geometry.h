@@ -61,7 +61,7 @@ public:
         return Vector2f(-x, -y);
     }
 
-    T operator[](int i) {
+    T operator[](int i) const {
         assert(0 <= i && i <= 1);
         if (i == 0)
             return x;
@@ -138,7 +138,7 @@ public:
         return Vector3(-x, -y, -z);
     }
 
-    T operator[](int i) {
+    T operator[](int i) const {
         assert(0 <= i && i <= 2);
         if (i == 0)
             return x;
@@ -320,7 +320,7 @@ public:
         return Normal3<T>(-x, -y, -z);
     }
 
-    T operator[](int i) {
+    T operator[](int i) const {
         assert(0 <= i && i <= 2);
         if (i == 0)
             return x;
