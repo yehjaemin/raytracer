@@ -10,6 +10,9 @@
 // tiny ray tracer ver.
 // --------------------
 
+#include <execinfo.h>
+#include <iostream>
+#include <unistd.h>
 #include "camera.h"
 #include "geometry.h"
 #include "integrator.h"

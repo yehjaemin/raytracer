@@ -20,8 +20,18 @@
 // --------------------
 // tiny ray tracer ver.
 // --------------------
+void handler(int sig) {
+    void *array[10];
+    size_t size;
+
+    size = backtrace(array, 10);
+    std::cerr << "Error: signal " << sig << std::endl;
+    backtrace_symbols_fd(array, size, STDERR_FILENO);
+    exit(1);
+}
 
 int main() {
+    signal(SIGSEGV, handler);
     BasicIntegrator b;
     Sphere s(Point3f(0.f, 0.f, 10.f), 2.f);
     b.render(s);
