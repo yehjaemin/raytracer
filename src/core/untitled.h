@@ -10,15 +10,10 @@
 // tiny ray tracer ver.
 // --------------------
 
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include <vector>
 #include "camera.h"
 #include "geometry.h"
+#include "integrator.h"
 #include "sphere.h"
 #include "transform.h"
 
-void render(const Sphere &s);
 int main();

@@ -1,9 +1,12 @@
 #pragma once
 
+#include <cmath>
+#include <vector>
+#include "camera.h"
+#include "sphere.h"
+
 class Integrator {
 public:
-    virtual ~Integrator();
-
     virtual void render(const Sphere &s) = 0;
 };
 
@@ -12,5 +15,5 @@ public:
     void render(const Sphere &s);
 
 private:
-    Camera camera;
+    BasicCamera camera;
 };
