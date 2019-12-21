@@ -3,7 +3,6 @@
 #include <cstring>
 #include <stack>
 #include "geometry.h"
-#include "untitled.h"
 
 struct Matrix4 {
     Matrix4() {

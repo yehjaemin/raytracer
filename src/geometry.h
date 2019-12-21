@@ -4,7 +4,12 @@
 #include <assert.h>
 #include <cmath>
 #include <limits>
-#include "untitled.h"
+
+namespace untitled {
+inline float lerp(float t, float a, float b) {
+    return (1 - t) * a + t * b;
+}
+} // namespace untitled
 
 template <typename T> class Vector2 {
 public:
