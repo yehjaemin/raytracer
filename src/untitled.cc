@@ -1,11 +1,4 @@
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include "camera.h"
-#include "geometry.h"
-#include "sphere.h"
+#include "untitled.h"
 
 //int main(int argc, char *argv[]) {
 //    Point3f p1(0.f, 0.f, 0.f);
