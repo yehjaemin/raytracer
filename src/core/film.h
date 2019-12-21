@@ -8,6 +8,7 @@
 class Film {
 public:
     Film() : height(720), width(1280) {
+        ofs = new std::ofstream;
         ofs->open("./out.ppm");
     }
     Film(int height, int width) : height(height), width(width) {
@@ -15,6 +16,7 @@ public:
     }
     ~Film() {
         ofs->close();
+        delete ofs;
     }
 
     void writeFrame(const std::vector<Vector3f> &frame);
