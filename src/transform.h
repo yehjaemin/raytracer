@@ -3,7 +3,6 @@
 #include <cstring>
 #include <stack>
 #include "geometry.h"
-#include "untitled.h"
 
 struct Matrix4 {
     Matrix4() {
@@ -65,19 +64,19 @@ public:
     Transform(const Matrix4 &m) : m(m) {}
     Transform(const Matrix4 &m, const Matrix4 &mInv) : m(m), mInv(mInv) {}
 
-    bool operator==(const Transform& t) const {
+    inline bool operator==(const Transform& t) const {
         return m == t.m && mInv == t.mInv;
     }
 
-    bool operator!=(const Transform& t) const {
+    inline bool operator!=(const Transform& t) const {
         return m != t.m || mInv == t.mInv;
     }
 
-    Matrix4 getMatrix() const {
+    inline Matrix4 getMatrix() const {
         return m;
     }
 
-    Matrix4 getInverseMatrix() const {
+    inline Matrix4 getInverseMatrix() const {
         return mInv;
     }
 
@@ -94,11 +93,11 @@ private:
     Matrix4 m, mInv;
 };
 
-Transform transpose(const Transform &m) {
+inline Transform transpose(const Transform &m) {
     return Transform(transpose(m.getMatrix()), transpose(m.getInverseMatrix()));
 }
 
-Transform inverse(const Transform &m) {
+inline Transform inverse(const Transform &m) {
     return Transform(m.getInverseMatrix(), m.getMatrix());
 }
 

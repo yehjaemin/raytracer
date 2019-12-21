@@ -3,24 +3,10 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(core_source
-    src/geometry.cc
-    src/transform.cc
-#    src/shape.cc
+add_executable(untitled
+    src/untitled.cc src/untitled.h
+    src/camera.cc src/camera.h
+    src/sphere.cc src/sphere.h
+    src/transform.cc src/transform.h
+    src/geometry.cc src/geometry.h
 )
-
-set(core_headers
-    src/geometry.h
-    src/transform.h
-#    src/shape.h
-    src/untitled.h
-)
-
-add_library(lib
-    ${core_source}
-    ${core_headers}
-)
-
-add_executable(untitled src/untitled.cc)
-
-target_link_libraries(untitled ${lib})

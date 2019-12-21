@@ -4,7 +4,12 @@
 #include <assert.h>
 #include <cmath>
 #include <limits>
-#include "untitled.h"
+
+namespace untitled {
+inline float lerp(float t, float a, float b) {
+    return (1 - t) * a + t * b;
+}
+} // namespace untitled
 
 template <typename T> class Vector2 {
 public:
@@ -247,11 +252,11 @@ public:
     T x, y, z;
 };
 
-template <typename T> inline float getDistance(const Point2<T> &p, const Point2<T> &q) {
+template <typename T> inline float distance(const Point2<T> &p, const Point2<T> &q) {
     return (p - q).length();
 }
 
-template <typename T> inline float getDistance(const Point3<T> &p, const Point3<T> &q) {
+template <typename T> inline float distance(const Point3<T> &p, const Point3<T> &q) {
     return (p - q).length();
 }
 
