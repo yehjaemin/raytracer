@@ -247,11 +247,11 @@ public:
     T x, y, z;
 };
 
-template <typename T> inline float getDistance(const Point2<T> &p, const Point2<T> &q) {
+template <typename T> inline float distance(const Point2<T> &p, const Point2<T> &q) {
     return (p - q).length();
 }
 
-template <typename T> inline float getDistance(const Point3<T> &p, const Point3<T> &q) {
+template <typename T> inline float distance(const Point3<T> &p, const Point3<T> &q) {
     return (p - q).length();
 }
 
