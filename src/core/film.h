@@ -22,6 +22,5 @@ public:
 
     int height, width;
 
-private:
     std::shared_ptr<std::ofstream> ofs;
 };
