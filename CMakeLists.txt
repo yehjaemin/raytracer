@@ -12,6 +12,7 @@ add_executable(untitled
     src/core/integrator.cc  src/core/integrator.h
     src/core/camera.cc      src/core/camera.h
     src/shapes/sphere.cc    src/shapes/sphere.h
+    src/core/shape.cc       src/core/shape.h
     src/core/film.cc        src/core/film.h
     src/core/transform.cc   src/core/transform.h
     src/core/geometry.cc    src/core/geometry.h

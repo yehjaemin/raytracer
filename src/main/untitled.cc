@@ -33,7 +33,7 @@ void handler(int sig) {
 int main() {
     signal(SIGSEGV, handler);
     BasicIntegrator b;
-    Sphere s(Point3f(0.f, 0.f, 10.f), 2.f);
+    Sphere s(translate(Vector3f(-5.f, 5.f, 20.f)), 1.f);
     b.render(s);
     return 0;
 }

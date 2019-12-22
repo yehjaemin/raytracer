@@ -1,10 +1,9 @@
 #include "shape.h"
 
-Shape::Shape(const Transformation *ObjectToWorld, const Transformation *WorldToObject)
-    : ObjectToWorld(ObjectToWorld), WorldToObject(WorldToObject) {};
+Shape::Shape(const Transform objectToWorld) : objectToWorld(objectToWorld), worldToObject(inverse(objectToWorld)) {}
 
-Shape::~Shape() {}
+Shape::Shape(const Transform objectToWorld, const Transform worldToObject) : objectToWorld(objectToWorld), worldToObject(worldToObject) {}
 
-Shape::getWorldBound() {
-    return (*ObjectToWorld)(ObjectBound());
+Bounds3f Shape::worldBound() const {
+    return objectToWorld(objectBound());
 }

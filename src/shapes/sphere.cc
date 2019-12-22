@@ -1,8 +1,13 @@
 #include "sphere.h"
 
+Sphere::Sphere(const Transform objectToWorld, float radius) : Shape(objectToWorld), radius(radius) {}
+
+Sphere::Sphere(const Transform objectToWorld, const Transform worldToObject, float radius) : Shape(objectToWorld, worldToObject), radius(radius) {}
+
 bool Sphere::isect(const Ray3f &ray) const {
     // check if ray origin is inside sphere
-    if (distance(o, ray.o) <= r)
+    Point3f o = objectToWorld(Point3f(0.f, 0.f, 0.f));
+    if (distance(o, ray.o) <= radius)
         return true;
 
     // check if ray is in front of sphere
@@ -14,7 +19,7 @@ bool Sphere::isect(const Ray3f &ray) const {
     Vector3f proj = normalize(ray.d) * dot(ray.d, v);
     Point3f po = ray.o + proj;
     float dist = distance(o, po);
-    if (dist > r)
+    if (dist > radius)
         return false;
     return true;
 }
