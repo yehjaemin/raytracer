@@ -1,5 +1,6 @@
 # raytracer
 integrator is broken while working on cameras
+film uses shared_ptr because unique_ptr and * crash make
 
 ### Low-Level Classes
 - [x] vectors
