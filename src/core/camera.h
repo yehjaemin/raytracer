@@ -2,28 +2,25 @@
 
 #include "film.h"
 #include "geometry.h"
-#include "sphere.h"
 #include "transform.h"
 
 class Camera {
 public:
-    Camera() {}
-    Camera(const Transform &t) : cameraToWorld(t) {}
+    Camera(const Transform &cameraToWorld) : cameraToWorld(cameraToWorld) {}
 
-    virtual Vector3f castRay(const Ray3f &r, const Sphere &s) = 0;
+    virtual void castRay(const Point2f &fp, Ray3f *ray) = 0;
 
     Transform cameraToWorld;
+    Film film;
 };
 
-class BasicCamera : public Camera {
+class ProjectiveCamera : public Camera {
 public:
-    BasicCamera() : fov(M_PI / 3.f) {
-        cameraToWorld = translate(Vector3f(0.f, 0.f, 0.f));
-    }
-    BasicCamera(const Film &film, const float &fov) : film(film), fov(fov) {}
+    ProjectiveCamera(const Transform &cameraToWorld, const Transform &cameraToScreen, const Bounds2f &screenWindow);
 
-    Vector3f castRay(const Ray3f &r, const Sphere &s);
-
-    Film film;
-    float fov; // field of view
+protected:
+    // screen is the visible film plane
+    // raster is screen scaled to resolution
+    Transform screenToRaster, rasterToScreen;
+    Transform cameraToScreen, rasterToCamera;
 };

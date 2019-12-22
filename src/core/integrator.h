@@ -12,8 +12,10 @@ public:
 
 class BasicIntegrator : public Integrator {
 public:
-    void render(const Sphere &s);
+//    Vector3f radiance(const Ray3f &ray, const Sphere &s);
+
+    void render(const Sphere &s) {}
 
 private:
-    BasicCamera camera;
+//    OrthographicCamera camera;
 };
