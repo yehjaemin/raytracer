@@ -24,7 +24,7 @@ void handler(int sig) {
     void *array[10];
     size_t size;
 
-    size = backtrace(array, 10);
+    size = backtrace(array, 20);
     std::cerr << "Error: signal " << sig << std::endl;
     backtrace_symbols_fd(array, size, STDERR_FILENO);
     exit(1);
@@ -32,7 +32,8 @@ void handler(int sig) {
 
 int main() {
     signal(SIGSEGV, handler);
-    BasicIntegrator b;
+    OrthographicCamera camera(Transform(), Bounds2f(Point2f(-100.f, -100.f),                                                    Point2f(100.f, 100.f)));
+    BasicIntegrator b(camera);
     Sphere s(translate(Vector3f(-5.f, 5.f, 20.f)), 1.f);
     b.render(s);
     return 0;

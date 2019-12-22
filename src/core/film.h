@@ -2,21 +2,20 @@
 
 #include <iostream>
 #include <fstream>
+#include <memory>
 #include <vector>
 #include "geometry.h"
 
 class Film {
 public:
     Film() : height(720), width(1280) {
-        ofs = new std::ofstream;
+        ofs = std::shared_ptr<std::ofstream>(new std::ofstream);
         ofs->open("./out.ppm");
     }
     Film(int height, int width) : height(height), width(width) {
         ofs->open("./out.ppm");
     }
     ~Film() {
-        ofs->close();
-        delete ofs;
     }
 
     void writeFrame(const std::vector<Vector3f> &frame);
@@ -24,5 +23,5 @@ public:
     int height, width;
 
 private:
-    std::ofstream *ofs;
+    std::shared_ptr<std::ofstream> ofs;
 };

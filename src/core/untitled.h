@@ -13,9 +13,9 @@
 #include <execinfo.h>
 #include <iostream>
 #include <unistd.h>
-#include "camera.h"
 #include "geometry.h"
 #include "integrator.h"
+#include "orthographic.h"
 #include "sphere.h"
 #include "transform.h"
 

@@ -8,7 +8,7 @@ class Camera {
 public:
     Camera(const Transform &cameraToWorld) : cameraToWorld(cameraToWorld) {}
 
-    virtual void castRay(const Point2f &fp, Ray3f *ray) = 0;
+    virtual void castRay(const Point2f &fp, Ray3f *ray) const = 0;
 
     Transform cameraToWorld;
     Film film;
