@@ -18,7 +18,7 @@ public:
 class BasicCamera : public Camera {
 public:
     BasicCamera() : fov(M_PI / 3.f) {
-        cameraToWorld = Transform(translate(Vector3f(0.f, 0.f, 1.f)));
+        cameraToWorld = Transform(translate(Vector3f(0.f, 0.f, 0.f)));
     }
     BasicCamera(const Film &film, const float &fov) : film(film), fov(fov) {}
 
