@@ -8,18 +8,20 @@
 - [x] bounds
 - [x] transforms --> translate, scale, rotate, inverse, lookAt
 - [ ] interactions
+- [ ] spectrum
+- [x] film
 
 ### Base Classes
 - [x] shapes --> spheres
-- [ ] cameras
-  - public variables - Transform cameraToWorld, Film film
+- [ ] materials
+- [x] cameras
 - [ ] lights
-  - this might not be necessary
 - [ ] samplers
 - [x] integrators
 
 ## Main Rendering Loop
-- [x] film
+- [ ] radiance computation
+- [ ] monte carlo integration
 
 ### Features
 - [ ] parallel
