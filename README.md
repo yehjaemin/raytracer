@@ -6,37 +6,20 @@
 - [x] normals
 - [x] rays
 - [x] bounds
-- [x] transforms - the columns of a transformation matrix give the effect of the transformation on the basis of a coordinate system
-  - translate
-  - scale
-  - rotate
-  - inverse
-  - lookAt
+- [x] transforms --> translate, scale, rotate, inverse, lookAt
 - [ ] interactions
-  - do this after looking at shapes
-  - public variables - Point3f p, float time, Vector3f wo, Normal3f n
-  - public methods - constructors, isSurfaceInteraction(), isMediumInteraction(), spawnRay(), spawnRayTo()
-  - class SurfaceInteraction : public Interaction {...};
 
 ### Base Classes
-- [ ] shapes
-  - Sphere
+- [x] shapes --> spheres
 - [ ] cameras
   - public variables - Transform cameraToWorld, Film film
 - [ ] lights
   - this might not be necessary
-  - do this after spectrum
 - [ ] samplers
-- [ ] integrators
-  - SamplerIntegrator
+- [x] integrators
 
 ## Main Rendering Loop
-- [ ] scene
-  - create a test scene and directly feed it into the rendering loop
-  - Scene <-- simplify this
-- [ ] film
-- [ ] spectrum
-  - RGBSpectrum
+- [x] film
 
 ### Features
 - [ ] parallel
