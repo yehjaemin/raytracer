@@ -1,5 +1,6 @@
 # raytracer
 - integrator is broken while working on cameras
+- have to supply points to castRay()
 - film uses shared_ptr because camera gets copied into integrator
   - pointer to camera could be a work around for this
 
