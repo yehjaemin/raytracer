@@ -20,7 +20,7 @@ public:
         return Vector2(x + v.x, y + v.y);
     }
 
-    inline Vector2<T> &operator+=(const Vector2<T> &v) {
+    inline const Vector2<T> &operator+=(const Vector2<T> &v) {
         x += v.x;
         y += v.y;
         return *this;
@@ -30,7 +30,7 @@ public:
         return Vector2(x - v.x, y - v.y);
     }
 
-    inline Vector2<T> &operator-=(const Vector2<T> &v) {
+    inline const Vector2<T> &operator-=(const Vector2<T> &v) {
         x -= v.x;
         y -= v.y;
         return *this;
@@ -42,7 +42,7 @@ public:
     }
 
     template <typename U>
-    inline Vector2<T> &operator*=(U u) {
+    inline const Vector2<T> &operator*=(U u) {
         x *= u;
         y *= u;
         return *this;
@@ -54,7 +54,7 @@ public:
     }
 
     template <typename U>
-    inline Vector2<T> operator/=(U u) {
+    inline const Vector2<T> operator/=(U u) {
         U uInv = 1 / u;
         x *= uInv;
         y *= uInv;
@@ -96,7 +96,7 @@ public:
         return Vector3(x + v.x, y + v.y, z + v.z);
     }
 
-    inline Vector3<T> &operator+=(const Vector3<T> &v) {
+    inline const Vector3<T> &operator+=(const Vector3<T> &v) {
         x += v.x;
         y += v.y;
         z += v.z;
@@ -107,7 +107,7 @@ public:
         return Vector3(x - v.x, y - v.y, z - v.z);
     }
 
-    inline Vector3<T> operator-=(const Vector3<T> &v) {
+    inline const Vector3<T> operator-=(const Vector3<T> &v) {
         v -= v.x;
         y -= v.y;
         z -= v.z;
