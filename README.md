@@ -1,4 +1,5 @@
 # raytracer
+integrator is broken while working on cameras
 
 ### Low-Level Classes
 - [x] vectors
