@@ -12,11 +12,11 @@ void BasicIntegrator::render(const Sphere &s) {
 
     // cast rays from camera
     Point3f orig = camera.cameraToWorld(Point3f(0.f, 0.f, 0.f));
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
             float t = std::tan(camera.fov / 2);
-            float x =  (2 * (i + 0.5) / float(height) - 1) * t;
-            float y = -(2 * (j + 0.5) / float(width)  - 1) * t * width / float(height);
+            float x =  (2 * (i + 0.5) / float(width) - 1) * t * width;
+            float y = -(2 * (j + 0.5) / float(height)  - 1) * t * height;
             Vector3f dir = normalize(Vector3f(x, y, 1));
             Ray3f ray(orig, dir);
             frame[i * width + j] = radiance(ray, s);
