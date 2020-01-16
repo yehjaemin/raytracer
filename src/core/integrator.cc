@@ -17,7 +17,8 @@ void BasicIntegrator::render(const Sphere &s) {
             float t = std::tan(camera.fov / 2);
             float x =  (2 * (i + 0.5) / float(width) - 1) * t * width;
             float y = -(2 * (j + 0.5) / float(height)  - 1) * t * height;
-            Ray3f ray = camera.makeRay(Point2f(x, y));
+            Ray3f ray;
+            camera.initRay(Point2f(x, y), &ray);
             frame[i * width + j] = radiance(ray, s);
         }
     }
