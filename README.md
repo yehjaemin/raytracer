@@ -1,7 +1,8 @@
 # raytracer
 - integrator is broken while working on cameras
-- have to supply points to castRay()
-  - using each pixel on a screen 1 unit away from camera
+- move castRay() into radiance() and delete castRay()
+- add makeRay() to Camera
+  - transforms pixels into vectors pointing into raster space
 - move basic integrator into its own file and directory
 - film uses shared_ptr because camera gets copied into integrator
   - pointer to camera could be a work around for this
