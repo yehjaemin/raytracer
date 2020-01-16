@@ -17,7 +17,7 @@ public:
 class BasicIntegrator : public Integrator {
 public:
     BasicIntegrator(OrthographicCamera camera) : camera(camera) {}
-//    Vector3f radiance(const Ray3f &ray, const Sphere &s);
+    Vector3f radiance(const Ray3f &ray, const Sphere &s);
 
     void render(const Sphere &s) {}
 
