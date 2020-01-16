@@ -1,7 +1,9 @@
 #include "integrator.h"
 
-void BasicIntegrator::radiance(const Ray3f &ray, const Sphere &s) {
-    return camera.castRay(ray, s);
+Vector3f BasicIntegrator::radiance(const Ray3f &ray, const Sphere &s) {
+    if (s.isect(ray))
+        return Vector3f(1.f, 1.f, 1.f);
+    return Vector3f(0.f, 1.f, 1.f);
 }
 
 void BasicIntegrator::render(const Sphere &s) {
