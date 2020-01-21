@@ -1,5 +1,6 @@
 # raytracer
 - integrator is broken while working on cameras
+  - successfully building but error on command
 - set up camera transforms and modify pixel lookup in render()
 - move basic integrator into its own file and directory
 - film uses shared_ptr because camera gets copied into integrator
