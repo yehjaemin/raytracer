@@ -121,7 +121,7 @@ public:
         Vector3<T> td = (*this)(r.d);
 
         // TODO offset ray origin to edge of error bounds and compute tMax
-        return Ray(to, td, r.tMax, r.time);
+        return Ray3<T>(to, td);
     }
 
     template <typename T>

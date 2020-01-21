@@ -18,6 +18,8 @@ class ProjectiveCamera : public Camera {
 public:
     ProjectiveCamera(const Transform &cameraToWorld, const Transform &cameraToScreen, const Bounds2f &screenWindow);
 
+    float fov = 3.14;
+
 protected:
     // screen is the visible film plane
     // raster is screen scaled to resolution

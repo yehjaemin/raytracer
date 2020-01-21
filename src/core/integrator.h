@@ -19,7 +19,7 @@ public:
     BasicIntegrator(OrthographicCamera camera) : camera(camera) {}
     Vector3f radiance(const Ray3f &ray, const Sphere &s);
 
-    void render(const Sphere &s) {}
+    void render(const Sphere &s);
 
 private:
     OrthographicCamera camera;

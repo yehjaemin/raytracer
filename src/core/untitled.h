@@ -16,6 +16,7 @@
 #include "geometry.h"
 #include "integrator.h"
 #include "orthographic.h"
+#include "signal.h"
 #include "sphere.h"
 #include "transform.h"
 
