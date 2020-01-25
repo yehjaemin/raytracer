@@ -33,9 +33,9 @@ void handler(int sig) {
 int main() {
     signal(SIGSEGV, handler);
     OrthographicCamera camera(Transform(), Bounds2f(Point2f(-100.f, -100.f),                                                    Point2f(100.f, 100.f)));
-//    std::cout << camera.film.ofs.use_count() << std::endl;
-//    BasicIntegrator b(camera);
-//    std::cout << camera.film.ofs.use_count() << std::endl;
+    std::cout << camera.film.ofs.use_count() << std::endl;
+    BasicIntegrator b(camera);
+    std::cout << camera.film.ofs.use_count() << std::endl;
     Sphere s(translate(Vector3f(-5.f, 5.f, 20.f)), 1.f);
 //    b.render(s);
     return 0;

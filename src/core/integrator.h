@@ -16,11 +16,13 @@ public:
 
 class BasicIntegrator : public Integrator {
 public:
-    BasicIntegrator(OrthographicCamera camera) : camera(camera) {}
+    BasicIntegrator(OrthographicCamera cam) {
+        camera = &cam;
+    }
     Vector3f radiance(const Ray3f &ray, const Sphere &s);
 
     void render(const Sphere &s);
 
 private:
-    OrthographicCamera camera;
+    OrthographicCamera* camera;
 };
